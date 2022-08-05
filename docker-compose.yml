@@ -15,5 +15,5 @@ services:
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
       - $HOME/.Xauthority:/root/.Xauthorityn
-    command: "tail -f /dev/null"
-    #command: bash -c "apt update; apt install -y gedit; tail -f /dev/null"
+    #command: "tail -f /dev/null"
+    command: bash -c "source /root/.profile; ./install.sh; ./start-ursim.sh"

@@ -12,17 +12,16 @@ Tested on Ubuntu 20.04, Docker 20.10.14, docker-compose 1.25.0
 
 ### Building the image
 
-      docker-compose build
+```
+docker-compose build
+```
 
 ### Run the Container + application
 
-Atm `install.sh` has to be invoced manually on the first start due to some `xterm` commands that cannot be executed in the build process. This command can be ommitted in future runs. 
+Atm `install.sh` is invoked at every startup automatically since some commands cannot be executed in the docker build process. The first start installs some stuff, after that startup is fast enough for daily use.
 
 ```
-docker-compose up -d
-docker exec -it ur-sim bash
-./install.sh
-./start-ursim.sh
+docker-compose up
 ```
 
 Special thx to https://github.com/ljden/URSim_Install_Guides for finding a lot of stuff needed to get this thing running.

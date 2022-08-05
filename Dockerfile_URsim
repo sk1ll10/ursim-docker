@@ -22,24 +22,30 @@ WORKDIR /root/ursim-5.12.2.1101534
 # install dependencies for install.sh
 RUN apt install -y \
       openjdk-8-jdk \
-      policykit-1 \
-      xterm \
       libjava3d-java \
       psmisc \
-      iputils-ping
+      iputils-ping \
+      apt-utils
 
 # add missing net-statistics script (variables@top to enable networking)
 RUN wget https://raw.githubusercontent.com/ljden/URSim_Install_Guides/main/src/net-statistics && \
     mv net-statistics /sbin/ && \
     chmod +x /sbin/net-statistics
 
+SHELL ["/bin/bash", "-c"]
+
+ARG DEBIAN_FRONTEND=noninteractive
+
 # add ursim bin to $PATH
 RUN echo -e "\nPATH=$PATH:$HOME/ursim-5.12.2.1101534/usr/bin" >> /root/.profile
 
 # monkeypatch problems with install.sh
 RUN mkdir /root/Desktop && \
-    #sed -i 's|xterm |#xterm|g' ./install.sh && \
     sed -i 's|pkexec ||g' ./install.sh && \
-    sed -i 's|sudo ||g' ./install.sh
+    sed -i 's|sudo ||g' ./install.sh && \
+    sed -i '/# if we/,/set -e/ s/^/#/' install.sh && \
+    sed -i 's/chmod +x ..\/URControl/chmod +x URControl/g' install.sh
 
-RUN ./install.sh
+# not working atm in docker build, moved to compose
+#RUN source /root/.profile && \
+#    ./install.sh
