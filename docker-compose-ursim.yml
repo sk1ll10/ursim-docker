@@ -1,0 +1,20 @@
+version: "2.4"
+services:
+  URsim:
+    container_name: URsim
+    image: ur-sim
+    build:
+      context: .
+      dockerfile: Dockerfile_URsim
+    environment:
+      DISPLAY: $DISPLAY
+      QT_X11_NO_MITSHM: '1'
+    stdin_open: true
+    network_mode: host
+    privileged: true
+    volumes:
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - $HOME/.Xauthority:/root/.Xauthority
+      - $HOME/git/bit/bitfactory/rosin-workshops:/root/rosin
+    command: "tail -f /dev/null"
+    #command: bash -c "apt update; apt install -y gedit; tail -f /dev/null"
