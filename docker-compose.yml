@@ -1,7 +1,7 @@
 version: "2.4"
 services:
-  URsim:
-    container_name: URsim
+  ursim:
+    container_name: ur-sim
     image: ur-sim
     build:
       context: .
