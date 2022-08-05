@@ -39,7 +39,7 @@ ARG DEBIAN_FRONTEND=noninteractive
 # add ursim bin to $PATH
 RUN echo -e "\nPATH=$PATH:$HOME/ursim-5.12.2.1101534/usr/bin" >> /root/.profile
 
-# monkeypatch problems with install.sh
+# monkeypatching problems with install.sh until UR provides a better version
 RUN mkdir /root/Desktop && \
     sed -i 's|pkexec ||g' ./install.sh && \
     sed -i 's|sudo ||g' ./install.sh && \
@@ -49,3 +49,8 @@ RUN mkdir /root/Desktop && \
 # not working atm in docker build, moved to compose
 #RUN source /root/.profile && \
 #    ./install.sh
+
+# until above is fixed use a reduced copy version to install the time consuming stuff beforehand, failing stuff is out commented
+RUN cp install.sh install_copy.sh && \
+    sed -i '/source version.sh/,/popd/ s/^/#/' install_copy.sh && \
+    ./install_copy.sh
