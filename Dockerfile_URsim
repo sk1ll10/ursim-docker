@@ -1,6 +1,6 @@
-LABEL maintainer="github@kill.io"
-
 FROM ubuntu:16.04
+
+LABEL maintainer="github@kill.io"
 
 RUN apt update && \
     apt install -y \
@@ -29,7 +29,6 @@ RUN apt install -y \
       iputils-ping
 
 # add missing net-statistics script (variables@top to enable networking)
-
 RUN wget https://raw.githubusercontent.com/ljden/URSim_Install_Guides/main/src/net-statistics && \
     mv net-statistics /sbin/ && \
     chmod +x /sbin/net-statistics
@@ -41,6 +40,6 @@ RUN echo -e "\nPATH=$PATH:$HOME/ursim-5.12.2.1101534/usr/bin" >> /root/.profile
 RUN mkdir /root/Desktop && \
     #sed -i 's|xterm |#xterm|g' ./install.sh && \
     sed -i 's|pkexec ||g' ./install.sh && \
-    sed -i 's|sudo ||g' ./install.sh && \
+    sed -i 's|sudo ||g' ./install.sh
 
 RUN ./install.sh
