@@ -14,7 +14,6 @@ services:
     privileged: true
     volumes:
       - /tmp/.X11-unix:/tmp/.X11-unix
-      - $HOME/.Xauthority:/root/.Xauthority
-      - $HOME/git/bit/bitfactory/rosin-workshops:/root/rosin
+      - $HOME/.Xauthority:/root/.Xauthorityn
     command: "tail -f /dev/null"
     #command: bash -c "apt update; apt install -y gedit; tail -f /dev/null"
