@@ -1,3 +1,5 @@
+LABEL maintainer="github@kill.io"
+
 FROM ubuntu:16.04
 
 RUN apt update && \
@@ -15,7 +17,9 @@ RUN wget https://s3-eu-west-1.amazonaws.com/ur-support-site/168410/URSim_Linux-5
 
 RUN tar -xvf URSim_Linux-5.12.2.1101534.tar.gz
 
-#install ur specific dependecies
+WORKDIR /root/ursim-5.12.2.1101534
+
+# install dependencies for install.sh
 RUN apt install -y \
       openjdk-8-jdk \
       policykit-1 \
@@ -24,21 +28,19 @@ RUN apt install -y \
       psmisc \
       iputils-ping
 
+# add missing net-statistics script (variables@top to enable networking)
 
 RUN wget https://raw.githubusercontent.com/ljden/URSim_Install_Guides/main/src/net-statistics && \
     mv net-statistics /sbin/ && \
     chmod +x /sbin/net-statistics
 
+# add ursim bin to $PATH
 RUN echo -e "\nPATH=$PATH:$HOME/ursim-5.12.2.1101534/usr/bin" >> /root/.profile
 
-# todo rename extracted folder
-
-WORKDIR /root/ursim-5.12.2.1101534
-
+# monkeypatch problems with install.sh
 RUN mkdir /root/Desktop && \
-    sed -i 's|xterm |#xterm|g' ./install.sh
-
-
-RUN sed -i 's|pkexec ||g' ./install.sh && \
+    #sed -i 's|xterm |#xterm|g' ./install.sh && \
+    sed -i 's|pkexec ||g' ./install.sh && \
     sed -i 's|sudo ||g' ./install.sh && \
-    ./install.sh
+
+RUN ./install.sh
