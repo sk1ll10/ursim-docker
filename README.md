@@ -1,6 +1,6 @@
 # ursim-docker
 
-Run Universal Robots Simulator in a docker environment using a 18.04 ubuntu base image.
+Run Universal Robots Simulator in a docker environment using a 16.04 ubuntu base image.
 
 Contains Offline Simulator - e-Series - UR Sim for Linux **5.12.2**
 
