@@ -1,6 +1,6 @@
 # ursim-docker
 
-Run Universal Robots Simulator in a docker environment using a 16.04 ubuntu base image.
+Run Universal Robots Simulator in a docker environment using a 16.04 ubuntu base image. Application is forwarded directly to the host so it is close to native and does not use VNC / Web stuff. 
 
 Contains Offline Simulator - e-Series - UR Sim for Linux **5.12.2**
 
@@ -23,6 +23,7 @@ docker-compose build
 Atm `install.sh` is invoked at every startup automatically since some commands cannot be executed in the docker build process. I have a stripped down version in the build process `install_copy.sh` which does the heavy stuff so startup using the below command should be fast enough for daily use.
 
 ```
+xhost local:root
 docker-compose up
 ```
 
